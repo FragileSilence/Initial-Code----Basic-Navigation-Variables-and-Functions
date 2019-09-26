@@ -7,7 +7,7 @@ int l_motor = 0;
 int r_motor = 3;
 int speed = 100;
 int pause = 750;
-int low_speed = 100;  
+int low_speed = 30;  
 
 int main()
 {
