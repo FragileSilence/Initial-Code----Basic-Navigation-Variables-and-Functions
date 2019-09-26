@@ -3,10 +3,10 @@ Robotics Assignment
 //Michael Goldberg
 #include <kipr/botball.h>
 
-int l_motor = 0;
-int r_motor = 3;
-int speed = 100;
-int pause = 750;
+int l_motor = 0;  //port 0 
+int r_motor = 3; //port 3 
+int speed = 100; //motor speed
+int pause = 750; 
 int low_speed = 30;  
 
 int main()
