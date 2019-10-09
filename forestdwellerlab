@@ -1,0 +1,74 @@
+#include <kipr/botball.h>
+
+int l_motor = 0;
+int r_motor = 3;
+int speed = 80;
+int pause = 750;
+int low_speed = 50;  
+int counter = 0; // true variable
+int l_bump = 0;
+int r_bump = 4;
+
+int main()
+{
+    	shut_down_in(300.0);
+    while(1){	 //stuff I want to loop 
+        forward();	//look for a collision event
+		if(digital(l_bump)){//if a collision is detected...
+            	printf("left bumper engaged\n");
+            	backward();
+            	left();
+            	counter = counter + 1; //same as counter++
+				
+            }
+            if(digital(r_bump)){
+                printf("right bumper engaged\n");
+                backward();
+                right();
+                counter = counter + 1; //same as counter++
+              
+            }
+        if(counter == 5) {
+            printf("EVASIVE MANUEVER\n");
+            evasive();
+            counter = 0;
+            
+        }
+            
+    }
+    printf("I like class\n");
+    return 0;
+}
+//FUNCTION DEFINITIONS//
+void forward(){
+    motor(l_motor,speed); //go foward 
+    motor(r_motor,speed);  
+    
+}
+void backward(){
+	 motor(l_motor,-low_speed); //go backward
+	 motor(r_motor,-low_speed);
+	 msleep(750);
+     ao();
+}
+	void right(){
+    motor(l_motor,speed); // try to turn right
+    motor(r_motor,-speed);
+    msleep(pause);
+	ao();
+}
+void left(){
+    motor(r_motor,speed); //try to turn left
+    motor(l_motor,-speed);
+    msleep(pause);
+	ao();
+ 
+void evasive() {
+    motor(l_motor, -speed);
+    motor (r_motor, -speed);
+    msleep(3000);
+    ao();
+}
+
+
+       
