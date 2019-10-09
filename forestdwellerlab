@@ -62,6 +62,8 @@ void left(){
     motor(l_motor,-speed);
     msleep(pause);
 	ao();
+	
+}
  
 void evasive() {
     motor(l_motor, -speed);
