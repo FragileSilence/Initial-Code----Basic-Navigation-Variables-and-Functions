@@ -1,0 +1,56 @@
+#include <kipr/botball.h>
+
+int f_sense = 5;
+int s_sense = 4;
+int target = 2900;
+int target2 = 2875;
+int l_motor = 0;
+int r_motor = 3;
+int speed = 30;
+int main()
+{
+    printf("Find the wall\n");
+   	stop(); //the main function
+    lturn(); //turns left if it gets too close to the wall
+    
+    stop(); //stops at the final wall
+   
+}
+//FUNCTION DEFINITIONS//
+void stop() { 
+    while (analog(f_sense) < target) {  //stops when the front sensor gets too close to the wall
+      // forward();
+        if (analog(s_sense) < target) { //turns away if it's too close to the wall
+            s1turn();
+           // forward();
+        }
+        if (analog(s_sense) > target2) { //turns towards if it's too far from the wall
+            s2turn();
+            //forward();
+        }
+    }
+}
+
+             
+void forward(){
+    motor(l_motor,speed); //go foward 
+    motor(r_motor,speed);  
+}
+
+void lturn() {
+    	motor(l_motor, 0);
+    	motor(r_motor, 50);
+    	msleep(1800);
+}
+ 
+void s1turn() {
+    	motor(l_motor, speed+30);
+    	motor(r_motor, 20);
+    printf("veering RIGHT/n");
+}
+
+void s2turn() {
+    	motor(l_motor, 20);
+    	motor(r_motor, speed+30);
+    printf("veering left/n");
+}
