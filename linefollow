@@ -1,0 +1,71 @@
+#include <kipr/botball.h>
+
+int l_motor = 0;
+int r_motor = 3;
+int f_sense = 5;
+int tophat = 0;
+int target = 2900;
+int blackline = 60;
+int noblackline = 20;
+int speed = 10;
+int slow = 5;
+int arm_port = 0;
+int arm_up = 2000;
+int arm_down = 500;
+int main()
+{
+   printf("finding line");
+   find_line();
+    printf("line is found");
+    printf("following line");
+    line_follow();
+    printf("servo is now waving");
+    servo_wave(); 
+   
+    
+}
+    
+void turn_right() {
+    
+motor(l_motor, slow);
+motor(r_motor, 40); // Turn/arc left.
+					}
+
+void turn_left() {
+motor(l_motor, 40);
+motor(r_motor, slow); // Turn/arc right.
+					}
+void forward(){
+    motor(l_motor,speed); //go foward 
+    motor(r_motor,speed);  
+}
+void find_line() {
+    while (analog(tophat) < blackline) {
+        forward(); //moves forward before seeing line
+        ao();
+    }
+}
+void line_follow() { 
+    while (analog(f_sense) < target) {
+        forward();
+        if (analog(tophat) <= blackline) {
+            turn_left(); }  // turns left
+        else {
+            turn_right(); 			//turns right
+        }
+            }
+            ao();
+            }
+void servo_wave() {
+    enable_servos();
+set_servo_position(arm_port, arm_up);
+msleep(750);
+set_servo_position(arm_port, arm_down); //servo moves to position
+msleep(750);
+set_servo_position(-arm_port, arm_up);
+msleep(750);
+set_servo_position(arm_port, arm_down);
+msleep(750);
+set_servo_position(-arm_port, arm_up);
+ disable_servos();
+}
