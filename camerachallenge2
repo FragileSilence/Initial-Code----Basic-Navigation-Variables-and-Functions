@@ -1,0 +1,63 @@
+#include <kipr/botball.h>
+
+int red = 0;
+int l_motor = 0;
+int r_motor = 3;
+int speed = 30;
+
+int main()
+{
+    camera_open();
+    camerafunction();
+   
+   
+}
+
+void forward() {
+    	 motor(l_motor,speed); //go foward 
+   		 motor(r_motor,speed);
+				}
+
+void lturn() { 
+   		motor(l_motor, 0);
+    	motor(r_motor, speed);
+    	msleep(50); 
+   			 }
+void rturn() { 
+    	motor(l_motor, speed);
+    	motor(r_motor,0);
+    	msleep(50);
+    
+}
+  
+void camerafunction() {
+    while (1) {
+    	camera_update();
+		if (get_object_count(red) > 0) {
+        	printf("red pom found\n");
+  			get_object_center_x(0, 0); 
+       		if (get_object_center_x(0, 0) == 80) {
+				printf("red pom is in the middle\n");
+       			forward(); 
+            }
+        if (get_object_count(red) == 0) {
+            		ao(); }
+            if (get_object_center_x(0, 0) < 80) {
+       		    printf("red pom is on the left\n");
+ 			    lturn(); 
+            }
+     	    if (get_object_center_x(0, 0) > 80) {
+        		printf("red pom is on the right\n");
+       			rturn();
+        	}
+            if (get_object_center_y(0, 0) >= 100) {
+                printf("pom too close, abort mission!\n");
+                ao(); 
+            }
+          
+        	else {
+        		printf("no pom found\n");
+        	}
+        }
+	}
+}
