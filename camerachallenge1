@@ -1,0 +1,35 @@
+#include <kipr/botball.h>
+int red = 0;
+int green = 1;
+int blue = 2;
+
+int main()
+{
+    camera_open(); //camera opens
+    camerafunction(); //the camera function
+}
+
+void camerafunction() {
+    
+    while (1) 
+    {
+     camera_update();
+    
+	if (get_object_count(red) > 0) {
+    
+  	printf("red pom found\n");
+    }
+
+    if (get_object_count(green) > 0)
+        { 
+            printf("green pom found\n"); }
+    
+    if (get_object_count(blue) > 0)
+        { 
+            printf("blue pom found\n");
+        }
+	else 
+        printf("no pom found\n");
+        }
+        }
+        
