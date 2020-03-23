@@ -1,0 +1,58 @@
+// Created on Mon March 23 2020
+
+int l_motor = 0;
+int r_motor = 2;
+int speed = 70;
+int fast = 100;
+int blacklinetarget = 10;
+
+int main()
+{
+forward();   //goes forward
+msleep(700);  //duration
+turn_right();  //initial turn to run into black  tape
+msleep(1000);  //duration of turn
+loopsnconditionals();  //turns right slightly to change angle of movement in a 	straight line towards the far wall and then the loop ends when the left bump sensor hits the wall
+backward(); //moves away from the far wall
+msleep(250); //short duration
+turn_left2(); //different left turn so it turns without moving
+msleep(550); //faces horizontally towards the black line
+	
+}
+void forward() {
+    motor(l_motor,speed); //go foward 
+    motor(r_motor,speed);  
+}
+void backward() {
+    motor(l_motor,-speed); //go backward 
+    motor(r_motor,-speed);  
+}
+void turn_right() {
+    
+motor(l_motor, fast);
+motor(r_motor, speed); // Turn/arc left
+}
+
+void turn_left2() {   //different left turn
+
+motor(l_motor, -50);
+motor(r_motor, fast);
+}
+
+void turn_left() {
+motor(l_motor, speed);
+motor(r_motor, fast); // Turn/arc right
+}
+
+void loopsnconditionals() { 
+	
+	while (digital(8) == 0)	{
+	forward();
+	
+	if (analog(5) > blacklinetarget) {
+		turn_right();
+		msleep(86);
+	}
+	}
+}
+
