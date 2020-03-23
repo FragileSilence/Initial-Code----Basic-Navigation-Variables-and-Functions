@@ -1,0 +1,48 @@
+// Created on Mon March 23 2020
+
+int l_motor = 0;
+int r_motor = 2;
+int speed = 10;
+int fast = 100;
+int blacklinetarget = 10;
+
+int main()
+{
+turn_right();
+msleep(100);
+forward();
+msleep(2500);
+loopsnconditionals();
+	
+}
+void forward() {
+    motor(l_motor,speed); //go foward 
+    motor(r_motor,speed);  
+}
+
+void turn_right() {
+    
+motor(l_motor, fast);
+motor(r_motor, speed); // Turn/arc left
+}
+
+void turn_left() {
+motor(l_motor, speed);
+motor(r_motor, fast); // Turn/arc right
+}
+
+void loopsnconditionals() { 
+	
+	while (digital(8) == 0)	{
+	forward();
+	
+	if (analog(5) > blacklinetarget) {
+		turn_right();
+		msleep(180);
+	}
+	if (digital(9) == 1) {
+		turn_left();
+		msleep(160);
+	}
+	}
+}
