@@ -5,6 +5,8 @@ int r_motor = 2;
 int speed = 70;
 int fast = 100;
 int blacklinetarget = 10;
+int leftdigital = 8;
+int reflectance = 5;
 
 int main()
 {
@@ -46,13 +48,16 @@ motor(r_motor, fast); // Turn/arc right
 
 void loopsnconditionals() { 
 	
-	while (digital(8) == 0)	{
+	while (digital(leftdigital) == 0)	{
 	forward();
-	
-	if (analog(5) > blacklinetarget) {
+	// as long as the left bump sensor isn't pressed, the robot will go forward
+	if (analog(reflectance) > blacklinetarget) {
 		turn_right();
 		msleep(86);
-	}
+	} //the robot will move away turning slightly red from the black line if it approaches it.
 	}
 }
+
+
+
 
