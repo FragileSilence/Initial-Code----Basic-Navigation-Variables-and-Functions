@@ -5,6 +5,9 @@ int r_motor = 2;
 int speed = 10;
 int fast = 100;
 int blacklinetarget = 10;
+int leftbump = 8;
+int rightbump = 9;
+int reflectance = 5;
 
 int main()
 {
@@ -33,16 +36,17 @@ motor(r_motor, fast); // Turn/arc right
 
 void loopsnconditionals() { 
 	
-	while (digital(8) == 0)	{
+	while (digital(leftbump) == 0)	{
 	forward();
 	
-	if (analog(5) > blacklinetarget) {
+	if (analog(reflectance) > blacklinetarget) {
 		turn_right();
-		msleep(180);
+		msleep(180);         //if the robot is approaching the black line, it will turn right off of the blackline
 	}
-	if (digital(9) == 1) {
-		turn_left();
+	if (digital(rightbump) == 1) {
+		turn_left();   //if the robot's right bump sensor hits the wall, it will turn left towards the blackline. 
 		msleep(160);
 	}
 	}
 }
+
