@@ -1,0 +1,130 @@
+
+
+// Created on Thurs March 26 2020
+
+int l_motor = 0;
+int r_motor = 2;
+int speed = 70;
+int fast = 100;
+int blacklinetarget = 10;
+int leftdigital = 8;
+int reflectance = 5;
+int blacklinetarget2 = 20;
+int f_sense = 1;
+int wall = 150;
+int right_reflectance = 6;
+int slower = 10;
+int slow = 20;
+int medium = 35;
+int main()
+{
+forward();   //goes forward
+msleep(700);  //duration
+turn_right();  //initial turn to run into black  tape
+msleep(1000);  //duration of turn
+loopsnconditionals();  //turns right slightly to change angle of movement in a 	straight line towards the far wall and then the loop ends when the left bump sensor hits the wall
+backward(); //moves away from the far wall
+msleep(250); //short duration
+turn_left2(); //different left turn so it turns without moving
+msleep(550); //faces horizontally towards the black line
+forward3(); //slower speed so line following is more consistent
+msleep(2000); //duration of the forward speed
+line_follow(); //follows the line until the conditions of the loop are not true and are brought out of the loop
+ao;
+backward(); //goes backwards and prepares to turn
+msleep(850); //duration
+turn_left2();//turns towards the final black line
+msleep(340); //duration
+ao(); //so that the next msleep with forward doesn't interfere with the previous msleep
+forward4(); //goes toward the black line
+msleep(4000); //duration
+line_follow2(); //follows the line until the conditions of the loop are not true and are brought out of the loop; in this case, the perpendicular point of the last 2 black lines end the loop.
+}
+
+
+void forward() {
+    motor(l_motor,speed); //go foward 
+    motor(r_motor,speed);  
+}
+void forward3() {
+    motor(l_motor,medium); //go foward 
+    motor(r_motor,medium);  
+}
+void backward() {
+    motor(l_motor,-speed); //go backward 
+    motor(r_motor,-speed);  
+}
+void turn_right() {
+    
+motor(l_motor, fast);
+motor(r_motor, speed); // Turn/arc right
+}
+
+void turn_left2() {   //different left turn
+
+motor(l_motor, -50);
+motor(r_motor, fast);
+}
+
+void turn_left() {
+motor(l_motor, speed);
+motor(r_motor, fast); // Turn/arc left
+}
+
+void turn_right2() {
+    
+motor(l_motor, slow);
+motor(r_motor, slower); // Turn/arc right
+}
+
+void turn_left3() {
+motor(l_motor, slower);
+motor(r_motor, slow); // Turn/arc left
+	
+}
+
+void forward2() {
+	motor (l_motor, slow);
+	motor (l_motor, slow); //go forward
+	
+}
+void forward4() {
+	motor (l_motor, slow);
+	motor (r_motor, slow); //go forward
+}
+
+void loopsnconditionals() { 
+	
+	while (digital(leftdigital) == 0)	{
+	forward();
+	// as long as the left bump sensor isn't pressed, the robot will go forward
+	if (analog(reflectance) > blacklinetarget) {
+		turn_right();
+		msleep(86);
+	} //the robot will move away turning slightly red from the black line if it approaches it.
+	}
+}
+
+void line_follow() { 
+    while (analog(f_sense) >= 100) { //this will stop when the medium range sensor is too close to the wall   
+        forward2();
+        if (analog(right_reflectance) <= blacklinetarget2) {
+            turn_left3(); }  // turns left if right reflectance sensor is less than the target value
+        else {
+            turn_right2(); 			//turns right if the value is greater to prevent it from going off of the black line
+        }
+            }
+            ao(); 
+            }
+			
+void line_follow2() { //this line follow follows the line perpendicular to the previous black line 
+    while (analog(right_reflectance) < 900) { //this will stop when the medium range sensor approaches the perpendicular black line (through testing)
+        forward2();
+        if (analog(right_reflectance) <= blacklinetarget2) {
+            turn_left3(); }  // turns left if right reflectance sensor is less than the target value
+        else {
+            turn_right2(); 			//turns right if the value is greater to prevent it from going off of the black line
+        }
+            }
+            ao(); 
+            }
